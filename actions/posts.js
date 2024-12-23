@@ -49,6 +49,10 @@ export async function createPost(prvState, formData) {
 }
 
 export async function togglePostLikeStatus(postId) {
-  await updatePostLikeStatus(postId, 2);
-  revalidatePath('/', 'layout');
+  try {
+    await updatePostLikeStatus(postId); // Update backend like status
+  } catch (error) {
+    console.error('Failed to update like status on server:', error);
+    throw error;
+  }
 }
